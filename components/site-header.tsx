@@ -140,7 +140,7 @@ export default function SiteHeader() {
             onClick={() => setIsMenuOpen(false)}
           >
             <span>Home</span>
-            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300"></span>
           </Link>
           <Link
             href="/about"
@@ -148,7 +148,7 @@ export default function SiteHeader() {
             onClick={() => setIsMenuOpen(false)}
           >
             <span>About Us</span>
-            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300"></span>
           </Link>
           <Link
             href="/services"
@@ -156,7 +156,7 @@ export default function SiteHeader() {
             onClick={() => setIsMenuOpen(false)}
           >
             <span>Services</span>
-            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300"></span>
           </Link>
           <Link
             href="/blog"
@@ -164,7 +164,7 @@ export default function SiteHeader() {
             onClick={() => setIsMenuOpen(false)}
           >
             <span>Blog</span>
-            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-[#f73e5d] via-[#00418d] to-[#2563eb] transform scale-x-0 origin-left transition-transform duration-300"></span>
           </Link>
         </div>
       </nav>

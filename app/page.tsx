@@ -35,7 +35,7 @@ export default function HomePage() {
           }
           return newStats;
         });
-      }, 50); // increased interval delay for slower animation
+      }, 15); // increased interval delay for slower animation
     });
 
     return () => {
