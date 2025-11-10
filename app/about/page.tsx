@@ -62,7 +62,7 @@ export default function AboutPage() {
         </div>
 
         {/* Decorative Globe */}
-        <div className="hidden lg:block absolute right-0 top-0 h-full w-[45%] opacity-20 pointer-events-none">
+        {/* <div className="hidden lg:block absolute right-0 top-0 h-full w-[45%] opacity-20 pointer-events-none">
           <div className="relative w-full h-full flex items-center justify-end">
             <Image
               src="/images/homepage/home_globe.gif"
@@ -72,7 +72,7 @@ export default function AboutPage() {
               className="w-auto h-auto max-w-full"
             />
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* Features Section */}
