@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { Search, MapPin } from "lucide-react";
+import jsPDF from "jspdf";
 
 export default function EmployerCandidateList() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [jobFamilyFilter, setJobFamilyFilter] = useState("");
   const [selectedGender, setSelectedGender] = useState<
     "male" | "female" | "both"
   >("male");
@@ -23,42 +27,158 @@ export default function EmployerCandidateList() {
       name: "K. Pradeep Kishor",
       initial: "P",
       company: "SkillKwizz",
+      email: "pradeep.kishor@example.com",
+      phone: "9876543210",
       skills: ["C#", "Java", "SQL"],
       percentile: 85,
       location: "Bangalore",
       color: "bg-green-600",
+      experience: "5 years",
+      qualification: "B.Tech in Computer Science",
     },
     {
       id: 2,
       name: "Manoj",
       initial: "M",
       company: "SkillKwizz",
+      email: "manoj@example.com",
+      phone: "9876543211",
       skills: ["C#", "Java", "SQL"],
       percentile: 85,
       location: "Bangalore",
       color: "bg-yellow-600",
+      experience: "4 years",
+      qualification: "B.Tech in IT",
     },
     {
       id: 3,
       name: "Kasiro",
       initial: "M",
       company: "SkillKwizz",
+      email: "kasiro@example.com",
+      phone: "9876543212",
       skills: ["C#", "Java", "SQL"],
       percentile: 85,
       location: "Bangalore",
       color: "bg-teal-600",
+      experience: "6 years",
+      qualification: "B.Tech in Software Engineering",
     },
     {
       id: 4,
       name: "Ravi",
       initial: "R",
       company: "SkillKwizz",
+      email: "ravi@example.com",
+      phone: "9876543213",
       skills: ["C#", "Java", "SQL"],
       percentile: 85,
       location: "Bangalore",
       color: "bg-blue-800",
+      experience: "3 years",
+      qualification: "B.Tech in Computer Science",
     },
   ];
+
+  // Filter candidates based on search query and other filters
+  const filteredCandidates = candidates.filter((candidate) => {
+    const matchesSearch =
+      candidate.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      candidate.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      candidate.phone.includes(searchQuery) ||
+      candidate.skills.some((skill) =>
+        skill.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+    const matchesLocation =
+      !locationFilter ||
+      candidate.location.toLowerCase().includes(locationFilter.toLowerCase());
+
+    const matchesJobFamily = !jobFamilyFilter || jobFamilyFilter === "";
+
+    return matchesSearch && matchesLocation && matchesJobFamily;
+  });
+
+  const handleSearch = () => {
+    // Search is already filtered, this button confirms the search
+    if (filteredCandidates.length === 0) {
+      alert("No candidates found matching your search criteria");
+    }
+  };
+
+  const handleClearFilters = () => {
+    setSearchQuery("");
+    setLocationFilter("");
+    setJobFamilyFilter("");
+  };
+
+  const generatePDF = (candidate: (typeof candidates)[0]) => {
+    const doc = new jsPDF();
+
+    // Set title
+    doc.setFontSize(20);
+    doc.text("Candidate Assessment Report", 20, 20);
+
+    // Set font size for content
+    doc.setFontSize(12);
+
+    // Add candidate information
+    const yStart = 40;
+    const lineHeight = 8;
+    let yPosition = yStart;
+
+    doc.text(`Name: ${candidate.name}`, 20, yPosition);
+    yPosition += lineHeight;
+
+    doc.text(`Company: ${candidate.company}`, 20, yPosition);
+    yPosition += lineHeight;
+
+    doc.text(`Email: ${candidate.email}`, 20, yPosition);
+    yPosition += lineHeight;
+
+    doc.text(`Phone: ${candidate.phone}`, 20, yPosition);
+    yPosition += lineHeight;
+
+    doc.text(`Location: ${candidate.location}`, 20, yPosition);
+    yPosition += lineHeight;
+
+    doc.text(`Experience: ${candidate.experience}`, 20, yPosition);
+    yPosition += lineHeight;
+
+    doc.text(`Qualification: ${candidate.qualification}`, 20, yPosition);
+    yPosition += lineHeight;
+
+    yPosition += 5;
+    doc.setFontSize(14);
+    doc.text("Skills Assessment", 20, yPosition);
+    doc.setFontSize(12);
+    yPosition += 8;
+
+    candidate.skills.forEach((skill) => {
+      doc.text(`• ${skill}`, 25, yPosition);
+      yPosition += lineHeight;
+    });
+
+    yPosition += 5;
+    doc.setFontSize(14);
+    doc.text("Percentile Score", 20, yPosition);
+    doc.setFontSize(12);
+    yPosition += 8;
+
+    doc.text(`Overall Percentile: ${candidate.percentile}%`, 20, yPosition);
+    yPosition += lineHeight;
+
+    // Add footer
+    doc.setFontSize(10);
+    doc.text(
+      `Generated on: ${new Date().toLocaleDateString()}`,
+      20,
+      doc.internal.pageSize.height - 10
+    );
+
+    // Save the PDF
+    doc.save(`${candidate.name}_Assessment_Report.pdf`);
+  };
 
   return (
     <div className="text-black">
@@ -70,6 +190,8 @@ export default function EmployerCandidateList() {
             <input
               type="text"
               placeholder="Candidate Email ID/Phone/Skill"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="bg-transparent w-full focus:outline-none text-black placeholder-gray-400"
             />
           </div>
@@ -78,12 +200,18 @@ export default function EmployerCandidateList() {
             <input
               type="text"
               placeholder="Location"
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
               className="bg-transparent w-full focus:outline-none text-black placeholder-gray-400"
             />
           </div>
           <div className="flex items-center px-4 py-3 border-r border-gray-300">
             <div className="relative w-full">
-              <select className="w-full bg-transparent appearance-none focus:outline-none text-black">
+              <select
+                value={jobFamilyFilter}
+                onChange={(e) => setJobFamilyFilter(e.target.value)}
+                className="w-full bg-transparent appearance-none focus:outline-none text-black"
+              >
                 <option value="">Job Family</option>
                 <option value="software">Software Development</option>
                 <option value="data">Data Science</option>
@@ -108,10 +236,16 @@ export default function EmployerCandidateList() {
             </div>
           </div>
           <div className="flex items-center justify-between px-4 py-3">
-            <button className="text-red-600 hover:text-red-800 font-semibold">
+            <button
+              onClick={handleClearFilters}
+              className="text-red-600 hover:text-red-800 font-semibold"
+            >
               Clear
             </button>
-            <button className="bg-gradient-to-r from-[#f73e5d] to-[#e63946] text-white px-6 py-1 rounded-full hover:from-red-600 hover:to-red-700 font-semibold">
+            <button
+              onClick={handleSearch}
+              className="bg-gradient-to-r from-[#f73e5d] to-[#e63946] text-white px-6 py-1 rounded-full hover:from-red-600 hover:to-red-700 font-semibold"
+            >
               Search
             </button>
           </div>
@@ -141,9 +275,11 @@ export default function EmployerCandidateList() {
                         selectedGender === "female" ? "both" : "male"
                       )
                     }
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-2 cursor-pointer"
                   />
-                  <label htmlFor="male">Male</label>
+                  <label htmlFor="male" className="cursor-pointer">
+                    Male
+                  </label>
                 </div>
                 <div className="flex items-center">
                   <input
@@ -157,9 +293,11 @@ export default function EmployerCandidateList() {
                         selectedGender === "male" ? "both" : "female"
                       )
                     }
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-2 cursor-pointer"
                   />
-                  <label htmlFor="female">Female</label>
+                  <label htmlFor="female" className="cursor-pointer">
+                    Female
+                  </label>
                 </div>
               </div>
             </div>
@@ -173,9 +311,11 @@ export default function EmployerCandidateList() {
                     id="csharp"
                     checked={selectedSkills.includes("C#")}
                     onChange={() => toggleSkill("C#")}
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-2 cursor-pointer"
                   />
-                  <label htmlFor="csharp">C#</label>
+                  <label htmlFor="csharp" className="cursor-pointer">
+                    C#
+                  </label>
                 </div>
                 <div className="flex items-center">
                   <input
@@ -183,9 +323,11 @@ export default function EmployerCandidateList() {
                     id="java"
                     checked={selectedSkills.includes("Java")}
                     onChange={() => toggleSkill("Java")}
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-2 cursor-pointer"
                   />
-                  <label htmlFor="java">Java</label>
+                  <label htmlFor="java" className="cursor-pointer">
+                    Java
+                  </label>
                 </div>
                 <div className="flex items-center">
                   <input
@@ -193,9 +335,11 @@ export default function EmployerCandidateList() {
                     id="sql"
                     checked={selectedSkills.includes("SQL")}
                     onChange={() => toggleSkill("SQL")}
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-2 cursor-pointer"
                   />
-                  <label htmlFor="sql">SQL</label>
+                  <label htmlFor="sql" className="cursor-pointer">
+                    SQL
+                  </label>
                 </div>
                 <div className="flex items-center">
                   <input
@@ -203,9 +347,11 @@ export default function EmployerCandidateList() {
                     id="python"
                     checked={selectedSkills.includes("Python")}
                     onChange={() => toggleSkill("Python")}
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-2 cursor-pointer"
                   />
-                  <label htmlFor="python">Python</label>
+                  <label htmlFor="python" className="cursor-pointer">
+                    Python
+                  </label>
                 </div>
               </div>
             </div>
@@ -214,43 +360,52 @@ export default function EmployerCandidateList() {
 
         {/* Candidate List */}
         <div className="col-span-3 space-y-4">
-          {candidates.map((candidate) => (
-            <div
-              key={candidate.id}
-              className="bg-[#4a63b3]/80 rounded-lg p-4 text-white"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div
-                    className={`w-12 h-12 rounded-full ${candidate.color} flex items-center justify-center text-white text-2xl font-bold mr-4`}
-                  >
-                    {candidate.initial}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-medium">{candidate.name}</h3>
-                    <p className="text-gray-300">{candidate.company}</p>
-                    <div className="flex items-center mt-1">
-                      <p className="text-sm">
-                        Skills: {candidate.skills.join(", ")}
-                      </p>
-                      <div className="mx-4 h-4 border-l border-gray-400"></div>
-                      <p className="text-sm">
-                        Percentile Score: {candidate.percentile}
-                      </p>
-                      <div className="mx-4 h-4 border-l border-gray-400"></div>
-                      <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        <p className="text-sm">{candidate.location}</p>
+          {filteredCandidates.length > 0 ? (
+            filteredCandidates.map((candidate) => (
+              <div
+                key={candidate.id}
+                className="bg-[#4a63b3]/80 rounded-lg p-4 text-white"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center flex-1">
+                    <div
+                      className={`w-12 h-12 rounded-full ${candidate.color} flex items-center justify-center text-white text-2xl font-bold mr-4 flex-shrink-0`}
+                    >
+                      {candidate.initial}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-medium">{candidate.name}</h3>
+                      <p className="text-gray-300">{candidate.company}</p>
+                      <div className="flex items-center mt-1 flex-wrap gap-2">
+                        <p className="text-sm">
+                          Skills: {candidate.skills.join(", ")}
+                        </p>
+                        <div className="h-4 border-l border-gray-400"></div>
+                        <p className="text-sm">
+                          Percentile Score: {candidate.percentile}
+                        </p>
+                        <div className="h-4 border-l border-gray-400"></div>
+                        <div className="flex items-center">
+                          <MapPin className="w-4 h-4 mr-1" />
+                          <p className="text-sm">{candidate.location}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <button
+                    onClick={() => generatePDF(candidate)}
+                    className="bg-gradient-to-r from-[#f73e5d] to-[#e63946] text-white px-4 py-2 rounded-lg hover:from-red-600 hover:to-red-700 font-semibold flex-shrink-0 ml-4"
+                  >
+                    View Report
+                  </button>
                 </div>
-                <button className="bg-gradient-to-r from-[#f73e5d] to-[#e63946] text-white px-4 py-2 rounded-lg hover:from-red-600 hover:to-red-700 font-semibold">
-                  View Report
-                </button>
               </div>
+            ))
+          ) : (
+            <div className="col-span-3 bg-[#4a63b3]/80 rounded-lg p-8 text-white text-center">
+              <p className="text-lg">No candidates found matching your search</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>

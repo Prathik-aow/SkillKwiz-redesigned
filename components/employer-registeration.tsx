@@ -13,6 +13,50 @@ export default function EmployerRegistration({
   const [phoneOtpSent, setPhoneOtpSent] = useState(false);
   const [authorized, setAuthorized] = useState<"yes" | "no" | null>(null);
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [company, setCompany] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailOtp, setEmailOtp] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [authorizationDetails, setAuthorizationDetails] = useState("");
+  const [department, setDepartment] = useState("Human Resources");
+
+  const handleSubmit = () => {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !company.trim() ||
+      !email.trim() ||
+      !email.includes("@") ||
+      !emailOtp.trim() ||
+      !phone.trim() ||
+      phone.length !== 10 ||
+      !phoneOtp.trim() ||
+      (authorized === "yes" && !authorizationDetails.trim())
+    ) {
+      alert("Please fill in all fields correctly before submitting");
+      return;
+    }
+    onSubmit();
+  };
+
+  const handleReset = () => {
+    setFirstName("");
+    setLastName("");
+    setCompany("");
+    setEmail("");
+    setEmailOtp("");
+    setEmailOtpSent(false);
+    setPhone("");
+    setPhoneOtp("");
+    setPhoneOtpSent(false);
+    setAuthorized(null);
+    setAuthorizationDetails("");
+    setDepartment("Human Resources");
+  };
+
   return (
     <div className="text-white">
       <h1 className="text-3xl font-semibold text-center mb-8">
@@ -27,12 +71,16 @@ export default function EmployerRegistration({
             <input
               type="text"
               placeholder="First Name"
-              className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
             />
             <input
               type="text"
               placeholder="Last Name"
-              className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
             />
           </div>
         </div>
@@ -43,7 +91,9 @@ export default function EmployerRegistration({
           <input
             type="text"
             placeholder="Enter Company Name"
-            className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
           />
         </div>
 
@@ -54,11 +104,20 @@ export default function EmployerRegistration({
             <input
               type="email"
               placeholder="Enter Email"
-              className="flex-1 bg-[#333333] rounded-l px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 bg-[#ffffff] rounded-l px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
             />
             <button
-              className="bg-[#333333] rounded-r px-4 py-3 text-white hover:bg-[#444444]"
-              onClick={() => setEmailOtpSent(true)}
+              className="bg-[#db3434] rounded-r px-4 py-3 text-white hover:bg-[#e55d5d]"
+              onClick={() => {
+                if (email.includes("@") && email.trim()) {
+                  setEmailOtpSent(true);
+                } else {
+                  alert("Please enter a valid email including '@'");
+                }
+              }}
+              type="button"
             >
               Get OTP
             </button>
@@ -68,7 +127,9 @@ export default function EmployerRegistration({
               <input
                 type="text"
                 placeholder="Enter OTP"
-                className="w-40 bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+                value={emailOtp}
+                onChange={(e) => setEmailOtp(e.target.value)}
+                className="w-40 bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
               />
             </div>
           )}
@@ -81,11 +142,22 @@ export default function EmployerRegistration({
             <input
               type="tel"
               placeholder="Enter Phone No."
-              className="flex-1 bg-[#333333] rounded-l px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="flex-1 bg-[#ffffff] rounded-l px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
+              maxLength={10}
+              pattern="\\d*"
             />
             <button
-              className="bg-[#333333] rounded-r px-4 py-3 text-white hover:bg-[#444444]"
-              onClick={() => setPhoneOtpSent(true)}
+              className="bg-[#db3434] rounded-r px-4 py-3 text-white hover:bg-[#e55d5d]"
+              onClick={() => {
+                if (phone.trim().length === 10) {
+                  setPhoneOtpSent(true);
+                } else {
+                  alert("Please enter a valid 10 digit phone number");
+                }
+              }}
+              type="button"
             >
               Get OTP
             </button>
@@ -95,7 +167,9 @@ export default function EmployerRegistration({
               <input
                 type="text"
                 placeholder="Enter OTP"
-                className="w-40 bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+                value={phoneOtp}
+                onChange={(e) => setPhoneOtp(e.target.value)}
+                className="w-40 bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
               />
             </div>
           )}
@@ -132,7 +206,9 @@ export default function EmployerRegistration({
             <input
               type="text"
               placeholder="Authorization Details"
-              className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              value={authorizationDetails}
+              onChange={(e) => setAuthorizationDetails(e.target.value)}
+              className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
             />
           )}
         </div>
@@ -141,7 +217,11 @@ export default function EmployerRegistration({
         <div>
           <label className="block mb-2">Department</label>
           <div className="relative">
-            <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+            <select
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+              className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none"
+            >
               <option>Human Resources</option>
               <option>Engineering</option>
               <option>Marketing</option>
@@ -150,7 +230,7 @@ export default function EmployerRegistration({
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
               <svg
-                className="w-5 h-5 text-white"
+                className="w-5 h-5 text-black"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -170,13 +250,16 @@ export default function EmployerRegistration({
         {/* Buttons */}
         <div className="flex justify-center gap-4 mt-8">
           <button
-            onClick={onSubmit}
+            onClick={handleSubmit}
             className="px-10 py-2 rounded bg-gradient-to-r from-[#f73e5d] to-[#e63946] text-white hover:opacity-90"
           >
             Submit
           </button>
 
-          <button className="px-10 py-2 rounded bg-[#333333] text-white hover:bg-[#444444]">
+          <button
+            onClick={handleReset}
+            className="px-10 py-2 rounded bg-[#333333] text-white hover:bg-[#444444]"
+          >
             Reset
           </button>
         </div>

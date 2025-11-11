@@ -7,18 +7,25 @@ import { useRef, useState } from "react";
 /**
  * AboutPage Component - Fully responsive About Us page
  * Optimized for mobile, tablet, desktop, and laptop devices
- * Features: Hero with video background, Vision/Mission/Purpose cards, About section, CEO profile, Video showcase
+ * Features: Hero with video background, Vision/Mission/Purpose cards, About section, CEO profile, Video showcase with poster
  */
 export default function AboutPage() {
-  // Ref and state for controlling video playback on poster click
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePosterClick = () => {
-    if (videoRef.current && !isPlaying) {
+    if (videoRef.current) {
       videoRef.current.play();
       setIsPlaying(true);
     }
+  };
+
+  const handleVideoPlay = () => {
+    setIsPlaying(true);
+  };
+
+  const handleVideoPause = () => {
+    setIsPlaying(false);
   };
 
   return (
@@ -206,21 +213,35 @@ export default function AboutPage() {
       {/* Video Section */}
       <section className="w-full bg-white py-10 md:py-14 lg:py-12">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
-          <div
-            className="relative rounded-lg overflow-hidden shadow-2xl cursor-pointer"
-            onClick={() => {
-              if (videoRef.current && !isPlaying) {
-                videoRef.current.play();
-                setIsPlaying(true);
-              }
-            }}
-          >
+          <div className="relative rounded-lg overflow-hidden shadow-2xl w-full max-w-4xl mx-auto">
+            {/* Play Button Overlay - Only visible when not playing */}
+            {!isPlaying && (
+              <div
+                className="absolute inset-0 bg-black/30 hover:bg-black/50 flex items-center justify-center transition-all duration-300 z-20 cursor-pointer"
+                onClick={handlePosterClick}
+              >
+                <div className="bg-[#f73e5d] rounded-full p-4 hover:scale-110 transition-transform duration-300">
+                  <svg
+                    className="w-10 h-10 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                  </svg>
+                </div>
+              </div>
+            )}
+
             <video
               ref={videoRef}
-              className="w-full h-auto"
+              className="w-full h-auto max-h-96 object-cover"
               controls
-              preload="none"
-              poster="/images/aboutpage/about_video.png"
+              controlsList="nodownload"
+              poster="/images/aboutpage/aboutt.png"
+              preload="metadata"
+              onPlay={handleVideoPlay}
+              onPause={handleVideoPause}
+              onEnded={handleVideoPause}
             >
               <source src="/images/aboutpage/about_video.mp4" type="video/mp4" />
               Your browser does not support the video tag.
@@ -231,9 +252,3 @@ export default function AboutPage() {
     </>
   );
 }
-
-const videoRef = { current: null as HTMLVideoElement | null };
-const isPlaying = false;
-const setIsPlaying = (val: boolean) => {
-  // placeholder function for state update to satisfy usage in JSX handler
-};

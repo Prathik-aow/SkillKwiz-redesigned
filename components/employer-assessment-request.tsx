@@ -34,12 +34,12 @@ export default function EmployerAssessmentRequest() {
             <input
               type="text"
               placeholder="First Name"
-              className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
             />
             <input
               type="text"
               placeholder="Last Name"
-              className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
             />
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function EmployerAssessmentRequest() {
           <input
             type="email"
             placeholder="Enter Email"
-            className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+            className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
           />
         </div>
 
@@ -60,7 +60,7 @@ export default function EmployerAssessmentRequest() {
           <input
             type="tel"
             placeholder="Enter Phone No."
-            className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+            className="w-full bg-[#ffffff] rounded px-4 py-3 text-black placeholder-gray-400 focus:outline-none"
           />
         </div>
 
@@ -68,7 +68,7 @@ export default function EmployerAssessmentRequest() {
         <div>
           <label className="block mb-2">Candidate ID</label>
           <div className="relative">
-            <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+            <select className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none">
               <option>PAN Card</option>
               <option>Aadhar Card</option>
               <option>Voter ID</option>
@@ -98,7 +98,7 @@ export default function EmployerAssessmentRequest() {
           <label className="block mb-2">
             Upload Resume <span className="text-red-500">*</span>
           </label>
-          <label className="w-full bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] flex items-center cursor-pointer">
+          <label className="w-full bg-[#ffffff] rounded px-4 py-3 text-black hover:bg-[#e7e2e2] flex items-center cursor-pointer">
             <Upload className="w-5 h-5 mr-2" />
             <span>Upload your Resume</span>
             <input type="file" className="hidden" accept=".pdf,.doc,.docx" />
@@ -110,7 +110,7 @@ export default function EmployerAssessmentRequest() {
           <label className="block mb-2">Skills</label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+              <select className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none">
                 <option>Job Family</option>
                 <option>IT</option>
                 <option>Accounting</option>
@@ -137,7 +137,7 @@ export default function EmployerAssessmentRequest() {
               </div>
             </div>
             <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+              <select className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none">
                 <option>Skills Family</option>
                 <option>Programming Languages</option>
                 <option>Frameworks</option>
@@ -162,7 +162,7 @@ export default function EmployerAssessmentRequest() {
             </div>
           </div>
 
-          <div className="bg-[#333333] rounded p-4">
+          <div className="bg-[#ffffff] rounded p-4">
             <div className="flex flex-wrap gap-2">
               {selectedSkills.map((skill) => (
                 <span
@@ -181,7 +181,7 @@ export default function EmployerAssessmentRequest() {
           <label className="block mb-2">Cost Unit</label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+              <select className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none">
                 <option>HR</option>
                 <option>Finance</option>
                 <option>Operations</option>
@@ -204,7 +204,7 @@ export default function EmployerAssessmentRequest() {
               </div>
             </div>
             <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+              <select className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none">
                 <option>Talent Acquisition</option>
                 <option>Recruitment</option>
                 <option>Staffing</option>
@@ -229,7 +229,7 @@ export default function EmployerAssessmentRequest() {
           </div>
 
           <div className="relative mb-4">
-            <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+            <select className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none">
               <option>TA-BU1</option>
               <option>TA-BU2</option>
               <option>TA-BU3</option>
@@ -257,7 +257,7 @@ export default function EmployerAssessmentRequest() {
         <div>
           <label className="block mb-2">Credit Cards</label>
           <div className="relative">
-            <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+            <select className="w-full bg-[#ffffff] rounded px-4 py-3 text-black appearance-none focus:outline-none">
               <option>ICIC Card</option>
               <option>HDFC Card</option>
               <option>SBI Card</option>
